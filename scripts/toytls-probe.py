@@ -103,7 +103,7 @@ def probe_one(host, port, cipher):
     s = socket.socket()
     s.connect((host, port))
     ctx = tls.TLSContext()
-    ctx.cipher = cipher
+    ctx.ciphers = [cipher]
     ctx.client_random = 'a'*32
     msg = tls.make_msg_client_hello(ctx)
     s.send(tls.header(*msg) + msg[1])
