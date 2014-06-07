@@ -38,6 +38,9 @@ TLS_HANDSHAKE_FINISHED = 0x14
 TLS_RSA_WITH_RC4_128_SHA = 0x0005
 TLS_DHE_RSA_WITH_AES_128_CBC_SHA = 0x0033
 TLS_ECDHE_RSA_WITH_RC4_128_SHA = 0xc011
+TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA = 0xc012
+TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA = 0xc013
+TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA = 0xc014
 
 
 TLS_CIPHER_SUITE = [
@@ -273,7 +276,10 @@ def parse_server_key_exchange(ctx, s):
         dh_g = get_field(ss)
         df_Ys = get_field(ss)
 
-    elif ctx.cipher == TLS_ECDHE_RSA_WITH_RC4_128_SHA:
+    elif ctx.cipher in (TLS_ECDHE_RSA_WITH_RC4_128_SHA,
+                        TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA,
+                        TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+                        TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA):
         tmp = ss.read(1) # type
         assert tmp == '\x03'
         raw.append(tmp)
